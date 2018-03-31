@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      prefix="schema: http://schema.org/ prism: http://prismstandard.org/namespaces/basic/2.0/">
+   <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <link rel="stylesheet" href="css/bootstrap.min.css"/>
+      <link rel="stylesheet" href="css/rash.css"/>
+      <script src="js/jquery.min.js"> </script>
+      <script src="js/bootstrap.min.js"> </script>
+      <script src="js/rash.js"> </script>
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+      <title>The SPAR Ontologies</title>
+      <meta about="#affiliation-1"
+            property="schema:name"
+            content="Department of Classical Philology and Italian Studies, University of Bologna, Bologna, Italy"/>
+      <meta about="#affiliation-2"
+            property="schema:name"
+            content="Oxford e-Research Centre, University of Oxford, Oxford, UK"/>
+      <meta about="#author-1"
+            name="dc.creator"
+            property="schema:name"
+            content="Silvio Peroni"/>
+      <meta about="#author-1"
+            property="schema:email"
+            content="silvio.peroni@unibo.it"/>
+      <link about="#author-1"
+            property="schema:affiliation"
+            href="#affiliation-1"/>
+      <meta about="#author-2"
+            name="dc.creator"
+            property="schema:name"
+            content="David Shotton"/>
+      <meta about="#author-2"
+            property="schema:email"
+            content="david.shotton@oerc.oc.ac.uk"/>
+      <link about="#author-2"
+            property="schema:affiliation"
+            href="#affiliation-2"/>
+      <meta property="prism:keyword" content="SPAR"/>
+      <meta property="prism:keyword" content="semantic publishing"/>
+      <meta property="prism:keyword" content="scholarly publishing"/>
+      <meta property="prism:keyword" content="OWL ontologies"/>
+      <meta property="prism:keyword" content="scholarly communication"/>
+   </head>
+   <body>
+      <section role="doc-abstract">
+         <h1>Abstract</h1>
+         <p>Over the past eight years, we have been involved in the development of a set of complementary and orthogonal ontologies that can be used for the description of the main areas of the scholarly publishing domain, known as the SPAR (Semantic Publishing and Referencing) Ontologies. In this paper, we introduce this suite of ontologies, discuss the basic principles we have followed for their development, and describe their uptake and usage within the academic, institutional and publishing communities.</p>
+         <p><strong>Notes:</strong> preprint submitted to the Resources track of the <a href="http://iswc2018.semanticweb.org/">17th International Semantic Web Conference (ISWC 2018)</a>.</p>
+         <p><strong>This version:</strong> <a href="https://w3id.org/spar/article/spar-iswc2018/2018-03-31.html">https://w3id.org/spar/article/spar-iswc2018/2018-03-31.html</a></p>
+         <p><strong>Last version:</strong> <a href="https://w3id.org/spar/article/spar-iswc2018/">https://w3id.org/spar/article/spar-iswc2018/</a></p>
+      </section>
+      <section>
+         <h1>Introduction</h1>
+         <p>The last decade has seen a new evolutionary step in scholarly publishing that has drastically changed the way of publishing and sharing research information. This is the use of Web and Semantic Web technologies for making published entities such as articles and scientific data machine-readable and easier to discover, browse and interact. Researchers in the field refer to it using the name <em>Semantic Publishing</em> 
+            <a href="#__RefNumPara__4367_1619781847"> </a>. This movement has actively involved people from both academia and industry, including publishers (e.g. Springer Nature, Elsevier and F1000), institutions for the assessment of the quality of research (e.g. the Italian National Agency for the Evaluation of Universities and Research Institutes), and broad academic communities such as Force11 and Linked Research, all united in the goal of changing and improving the current practices of research communication.</p>
+         <p>While the invention of print permitted the written recording of scientific discoveries, the advent of the Web has allowed researchers and publishers to increase drastically their visibility by means of new communication channels and electronic publications. Semantic Publishing additionally brings machines (software agents, intelligent interfaces, Semantic Web reasoners, etc.) into the game: the more that scholarly data (e.g., metadata of scholarly publications, their associated research data, and the experimental and computational workflows employed in the research) are available in machine-readable forms, the more those involved in the whole scholarly communication domain – researchers, publishers, reviewers, readers – will benefit in terms of visibility, findability of related research, and discoverability of previously unknown links between works that were not explicitly related with well-known indicators such as citations.</p>
+         <p>Providing scholarly data that can be easily parsed, processed and interpreted computationally is matter of having expressive shared machine-processable descriptions on the Web. Semantic Web technologies such as RDF, RDFS, OWL, and SPARQL provide the main building blocks towards that goal. Such tools can be considered a formal, semantically-oriented interlingua for machines to express and query data. In the 2010, when we started to work actively on this topic, what were missing were appropriate rich ontologies for enabling the accurate and reasonably expressive description of all aspects of the scholarly publishing domain.</p>
+         <p>Since then, our work in this area has been dedicated to the development of a set of complementary and orthogonal ontologies that can be used for the description of the main areas of this publishing domain, from the metadata of scholarly artefacts to the specification of the workflow processes that result in the publication of a scholarly bibliographic product. This work, described here, has resulted in the development of the SPAR (Semantic Publishing and Referencing) Ontologies (<a href="http://www.sparontologies.net/">http://www.sparontologies.net</a>), a suite of ontological modules enabling one to record the scholarly publishing domain using Semantic Web technologies. </p>
+         <p>The rest of the paper is organised as follows. In <a href="#__RefHeading__4397_1619781847"> </a>, we introduce other existing Semantic Web vocabularies and ontologies that have been used over the past eight years for the description of (parts of) the publishing domain. In <a href="#__RefHeading__4399_1619781847"> </a>, we describe the design principles we have followed for the development of the SPAR Ontologies. In <a href="#__RefHeading__4401_1619781847"> </a>, we introduce all the current SPAR Ontologies, clarifying their scope and highlighting their most significative aspects. In <a href="#__RefHeading__4403_1619781847"> </a> we show how external parties, including researchers, publishers and institutions, have used the SPAR Ontologies for describing bibliographic documents. Finally, in <a href="#__RefHeading__4405_1619781847"> </a>, we conclude the paper by sketching out some future work.</p>
+      </section>
+      <section id="__RefHeading__4397_1619781847">
+         <h1>Existing models</h1>
+         <p>Our work on the SPAR Ontologies were not the first efforts to provide Semantic Web descriptions of the publishing domain. The <em>Dublin Core Metadata Terms</em> (DCTerms) <a href="#__RefNumPara__12184_746342889"> </a> is among the first international standards to describe bibliographic information on the Web. Extending DCTerms are the <em>Functional Requirements for Bibliographic Records</em> (FRBR) <a href="#__RefNumPara__12186_746342889"> </a>, a relatively recent specification made by the International Federation of Library Association and Institution, that models the concept of a bibliographic entity according to four different but closely-related point of views called <em>work</em> (the conceptual idea), <em>expression</em> (the content), <em>manifestation</em> (the format), and <em>item </em>(the tangible object). These models, actively used today with others of similar kind including the <em>Publishing Requirements for Industry Standard Metadata</em> (PRISM) <a href="#__RefNumPara__22813_746342889"> </a>, should be considered top-level vocabularies rather than something specifically developed to characterise specific aspects of scholarly publishing. Thus all of them lacks the concepts of journal article, book chapter, conference paper, reference list, citation, editor and similar entities that are useful for describing the scholarly publication world in detail. Furthermore, they were not developed with the RDF / OWL data model in mind, but rather as merely documental specifications, although Semantic Web implementations of them have been provided in recent years.</p>
+         <p>While past proposals exist for the adoption of semantic technologies for the scholarly publishing domain (e.g. ScholOnto <a href="#__RefNumPara__12330_746342889"> </a>), the <em>AKT Reference Ontology</em> (AKTRO) should probably be listed as the first ontology specifically developed by means of Semantic Web technologies for describing this domain. Originally developed in OCML and then converted in OWL (<a href="http://lov.okfn.org/dataset/lov/vocabs/akt">http://lov.okfn.org/dataset/lov/vocabs/akt</a>), it provides a set of classes and properties that allow the description of different kinds of publications and agents involved in the publishing process. </p>
+         <p>A first serious attempt towards providing an OWL-native scholarly-oriented publication ontology was the <em>Bibliographic Ontology</em> (BIBO) <a href="#__RefNumPara__12256_746342889"> </a>, which introduced the concepts of article, journal, conference proceedings, etc. While still in use today, it falls short of being sufficiently comprehensive, lacking for instance the concepts of dataset, blog post, citation function and publication workflow. Additionally, BIBO is a ‘flat’ ontology, so that the class bibo:AcademicArticle conflated the two concepts Research Paper (a conceptual Work) and Journal Article (an Expression of such a Work). Since then, several Semantic Web ontologies have been proposed for addressing the description of additional aspects of the publishing domain. Notable examples are the <em>Semantic Web Journal</em> (<em>SWJ</em>) <em>ontology</em> 
+            <a href="#__RefNumPara__7972_746342889"> </a>, the <em>Semantic Web Conference</em> (SWC) <em>ontology</em> (<a href="http://data.semanticweb.org/ns/swc/ontology">http://data.semanticweb.org/ns/swc/ontology</a>), <em>Semantically Annotated LaTeX</em> (SALT) ontologies <a href="#__RefNumPara__11906_746342889"> </a>, the <em>Nature Ontologies</em> 
+            <a href="#__RefNumPara__7974_746342889"> </a>, the <em>SciGraph Ontologies</em> 
+            <a href="#__RefNumPara__12370_746342889"> </a>, and the <em>Conference Ontology</em> 
+            <a href="#__RefNumPara__12412_746342889"> </a>.</p>
+         <p>Along with these, several new OWL-based top-level models have been releases, that provide general vocabularies for referring to aspects of the scholarly and publishing domain. Among the most notable are the <em>Resource Description and Access</em> (RDA) OWL vocabularies <a href="#__RefNumPara__11904_746342889"> </a> and BIBFRAME (<a href="http://bibframe.org/vocab.rdf">http://bibframe.org/vocab.rdf</a>), which have been derived by extending existing specification, namely FRBR <a href="#__RefNumPara__12186_746342889"> </a> and MARC 21 <a href="#__RefNumPara__12499_746342889"> </a>, respectively.</p>
+         <p>Finally, several groups have started to propose larger and more complex Semantic Web ontologies for describing the publishing domain as a whole, instead of focussing on top-level concepts or a few specific aspects. Apart from the SPAR Ontologies, which are described in the following sections, some of the first attempts in this direction are those of the <em>Semantic Web Applications in Neuromedicine</em> (SWAN) project which proposed the <em>SWAN biomedical discourse ontology</em> 
+            <a href="#__RefNumPara__11908_746342889"> </a>, the <em>VIVO Integrated Semantic Framework</em> (VIVO-ISF)<em> </em>ontology (<a href="http://vivoweb.org/ontology/core">http://vivoweb.org/ontology/core</a>), and the <em>Semanticscience Integrated Ontology</em> (SIO) <a href="#__RefNumPara__11940_746342889"> </a> – all of which align with some of the entities described in the SPAR Ontologies.</p>
+      </section>
+      <section id="__RefHeading__4399_1619781847">
+         <h1>Development guidelines</h1>
+         <p>In order to provide a set of ontologies to describe scholarly bibliographic information that built on our previous experience of developing the prototype Citation Typing Ontology (CiTO) <a href="#__RefNumPara__12715_746342889"> </a>, we started in 2010 to work on a comprehensive and complementary set of orthogonal OWL 2 DL ontologies that describe all the aspects of the publishing domain, namely the SPAR (Semantic Publishing And Referencing) Ontologies. The development process we followed complied with the following development principles (DP) that were derived after discussions with researchers and publishers.</p>
+         <p>
+            <strong>DP1 - Enabling adoption: addressing actors’ requirements.</strong> The involvement of domain experts is good practice in any robust methodology for ontology design, since it allows the developer to gather information about the important aspects to model and also the terminology used in real practice. Thus, a model developed for describing the publishing domain, which aims at being adopted broadly in the scholarly communications community, should strongly take into consideration all the actors involved in such domain (authors, editors, publishers, members of academic communities, etc.), their needs, and the vocabularies they use in their day-to-day work for referring to publishing things. Within the scholarly communication domain, this requirement is also currently being addressed by worldwide initiatives such as Metadata 2020 (see <a href="http://www.metadata2020.org/projects/definitions/">http://www.metadata2020.org/projects/definitions/</a>).</p>
+         <p>
+            <strong>DP2 - Enabling reuse: interoperable ontological modules.</strong> Organising comprehensive ontological descriptions of a field by the use of a set of smaller orthogonal ontology modules is recognised good practice in ontology design, since it improves the reusability of such modules in different contexts and across domains <a href="#__RefNumPara__9179_1619781847"> </a>. For the SPAR ontologies, we thus developed several complementary ontological blocks, each describing a particular aspect of the publishing domain, which could be combined easily to meet the actual description needs. In this way, we enable a possible adopter to select and use consistently only those blocks describing, for instance, citations and bibliographic metadata, without caring about other aspects such as authors affiliations, contributors’ roles, and the structural and rhetorical organisation of the document.</p>
+         <p>
+            <strong>DP3 - Enabling application in different contexts: minimal logical constraints.</strong> OWL allows one to define several constraints on ontological entities. Those vary from the specification that certain relations can be used only among specific kinds of entities (domain and range constraints, e.g. that the concept of authorship can involve only a person and the scholarly paper (s)he has authored, but cannot involve cats or tractors) to more complex definitions (e.g. all authors of an academic document should be affiliated with at least one recognised academic institution, the name of which must be explicitly stated in the authored document). On the one hand, the use of such constraints allows an accurate formal verification of a dataset: it is possible to understand whether it is compliant with the ground model defined by the ontology or whether it presents some inconsistencies that violates the constraints defined. However, on the other hand, excessive use of such constraints would make the ontology unusable in practice, in particular in the context of Linked Open Data (LOD), thus resulting only in a pure theoretical exercise in ontology construction. As confirmation, it is worth noticing that some of the most influential and (re-)used ontologies in the context of LOD nowadays are light-weight <a href="#__RefNumPara__9269_1619781847"> </a>, containing only a very limited number of strictly necessary constraints that allow a respectable level of formal verification of data, while enabling their easy learning and re-use in different contexts. Thus, logical constraints must be used with caution if the goal is to make the ontology adopted worldwide in a variety of contexts.</p>
+         <p>
+            <strong>DP4 - Enabling interoperability: reusing existing vocabularies.</strong> The reuse of existing models and vocabularies that already have widespread uptake and usage allows an improvement in the interoperability of the ontology itself with other ones <a href="#__RefNumPara__21215_746342889"> </a> (particularly in the context of LOD), while avoiding <q>re-inventing the wheel</q>. In addition, the inclusion of concepts from existing, shared and well-known vocabularies and/or the adoption of widely used design patterns is good practice for the development of a new ontology, since they can provide an initial more general stub from which to the develop more specific descriptions <a href="#__RefNumPara__21361_746342889"> </a>, and can speed the adopters' learning curve for understanding the new model.</p>
+         <p>
+            <strong>DP5 - Enabling human understandability: supporting people with examples and tools.</strong> Alongside the development of the formal ontology itself, one should work also to provide mechanisms for understanding and accessing the ontology by people who may not necessarily be experts in Knowledge Representation. Two main artefacts can be used in this direction. First, the creation of several clear examples that show how one can use the ontology for modelling particular scenarios. Second, the development of tools, particularly graphical and presentational tools, that assist people to understand the ontology with the minimum of effort and without having specific technical background of the ontology language used for its development.</p>
+         <p>Following these principles, we have developed three tools that have been systematically used since 2010 during the development of the SPAR Ontologies, and that have more recently also been adopted by several other projects. These are:</p>
+         <ul>
+            <li>
+               <p>the <em>Simplified Agile Methodology for Ontology Development</em> (SAMOD, <a href="https://github.com/essepuntato/samod">https://github.com/essepuntato/samod</a>) <a href="#__RefNumPara__22067_746342889"> </a>, an agile methodology for the development of ontologies by means of small steps in an iterative workflow that focuses on creating well-developed and well-documented models starting from exemplar domain descriptions;</p>
+            </li>
+            <li>
+               <p>the <em>Live OWL Documentation Environment</em> (LODE, <a href="http://www.essepuntato.it/lode">http://www.essepuntato.it/lode</a>) <a href="#__RefNumPara__22063_746342889"> </a>, a service that automatically extracts classes, properties, individuals, annotations, general axioms and namespace declarations from OWL ontologies, and renders them in a human-readable HTML page designed for browsing and easy navigation by means of embedded links;</p>
+            </li>
+            <li>
+               <p>the <em>Graphical Framework for OWL Ontologies</em> (Graffoo, <a href="http://www.essepuntato.it/graffoo">http://www.essepuntato.it/graffoo</a>) <a href="#__RefNumPara__22065_746342889"> </a>, an open source tool that can be used to present the classes, properties and restrictions within OWL ontologies, or sub-sections of them, in clear and easy-to-understand diagrams. Examples of Graffoo representations are given below.</p>
+            </li>
+         </ul>
+      </section>
+      <section id="__RefHeading__4401_1619781847">
+         <h1>Introducing the SPAR Ontologies</h1>
+         <p>Our ontology development following these principles, which developed from a preliminary project in this area <a href="#__RefNumPara__12715_746342889"> </a>, resulted in the release, at the end of 2010, of eight complementary and interoperable core ontology modules under the umbrella name of the <em>SPAR (Semantic Publishing and Referencing) Ontologies</em> (<a href="http://www.sparontologies.net/">http://www.sparontologies.net</a>). Over the following years, we have extended these with additional modules to address other aspects of the publishing domain.</p>
+         <p>These SPAR Ontologies form a suite of orthogonal, non-overlapping and complementary OWL 2 DL ontology modules (all made available with a Creative Commons Attribution License 4.0) for the creation of comprehensive machine-readable RDF metadata covering every aspect of semantic publishing and referencing: document descriptions, bibliographic resource identifiers, types of citations and their related contexts, bibliographic references, document parts and status, agents' roles and contributions, bibliometric data and workflow processes. All these ontologies has been developed by means of SAMOD <a href="#__RefNumPara__22067_746342889"> </a>, and are accompanied by (a) a short descriptive page on the SPAR website, (b) Graffoo diagrams <a href="#__RefNumPara__4210_1242533738"> </a>, (c) examples of usage in Turtle (available both on the SPAR website and in Figshare), (d) publication information (if any), and (e) the use of LODE to create HTML documentation of the ontologies <a href="#__RefNumPara__1000_1242533738"> </a>. Most of their terms are already listed in LOV (Linked Open Vocabularies) with an appropriate category tag (<a href="http://lov.okfn.org/dataset/lov/vocabs?tag=SPAR">http://lov.okfn.org/dataset/lov/vocabs?tag=SPAR</a>).</p>
+         <p>The SPAR Ontologies follows the FAIR principles for data publication <a href="#__RefNumPara__20980_358898854"> </a>, and reuse existing standards developed for describing bibliographic resources, such as FRBR <a href="#__RefNumPara__12186_746342889"> </a> and PRISM <a href="#__RefNumPara__22813_746342889"> </a>. They also reuse and import several existing models, among which are DCTerms <a href="#__RefNumPara__12499_746342889"> </a>, SKOS <a href="#__RefNumPara__994_1242533738"> </a>, FOAF <a href="#__RefNumPara__996_1242533738"> </a>, the Collections Ontology <a href="#__RefNumPara__998_1242533738"> </a>, PROV-O <a href="#__RefNumPara__1000_1242533738"> </a>, and several Ontology Design Patterns <a href="#__RefNumPara__21361_746342889"> </a>. An bird-eye view of all the SPAR Ontologies and their associated external ontologies and design patterns is shown in <a href="#refIllustration0"> </a>.</p>
+         <figure id="refIllustration0">
+            <p>
+               <img src="img/10000000000005BA000000D67242FE4D.png"
+                    alt="The SPAR Ontologies and their relations with other models."/>
+            </p>
+            <figcaption>The SPAR Ontologies and their relations with other models.</figcaption>
+         </figure>
+         <p>While we have already published various articles describing some of the SPAR Ontologies, we avoid mentioning them explicitly here, since they are all available on the SPAR Ontologies website at <a href="http://www.sparontologies.net/publications">http://www.sparontologies.net/publications</a>. This present paper is the first to present a bird-eye view of the whole suite of SPAR Ontologies, and will be used from now on as the canonical way for citing the SPAR Ontologies.</p>
+         <section>
+            <h1>Ontologies for describing bibliographic resources and their parts </h1>
+            <p>Five ontological modules have been developed to permit the accurate description of bibliographic resources, their identifiers, and their internal components (paragraphs, sections, results, methods, etc.). These are: </p>
+            <ul>
+               <li>
+                  <p>FaBiO (the FRBR-aligned Bibliographic Ontology, <a href="http://purl.org/spar/fabio">http://purl.org/spar/fabio</a>), </p>
+               </li>
+               <li>
+                  <p>FRBR-DL (the Essential FRBR in OWL2 DL Ontology, <a href="http://purl.org/spar/frbr">http://purl.org/spar/frbr</a>), </p>
+               </li>
+               <li>
+                  <p>DoCO (the Document Components Ontology, <a href="http://purl.org/spar/doco">http://purl.org/spar/doco</a>), </p>
+               </li>
+               <li>
+                  <p>DEO (the Discourse Elements Ontology; <a href="http://purl.org/spar/deo">http://purl.org/spar/deo</a>), and </p>
+               </li>
+               <li>
+                  <p>the DataCite Ontology (<a href="http://purl.org/spar/datacite">http://purl.org/spar/datacite</a>). </p>
+               </li>
+            </ul>
+            <p>These ontologies are summarised in <a href="#refIllustration1"> </a>. </p>
+            <figure id="refIllustration1">
+               <p>
+                  <img src="img/1000000000000498000002818C1F40EA.png"
+                       alt="A Graffoo diagram illustrating some of the ontological entities defined in FaBiO, FRBR-DL, DoCO, DEO and the DataCite Ontology."/>
+               </p>
+               <figcaption>A Graffoo diagram illustrating some of the ontological entities defined in FaBiO, FRBR-DL, DoCO, DEO and the DataCite Ontology.</figcaption>
+            </figure>
+            <p>FaBiO is an ontology for recording and publishing descriptions of entities that are published or potentially publishable. FaBiO entities are primarily textual publications such as books, magazines, newspapers and journals, and items of their content such as articles, poems, conference papers and editorials. However, they also include blogs, web pages, datasets, computer algorithms, experimental protocols, formal specifications and vocabularies, legal records, governmental papers, technical and commercial reports and similar publications, and also anthologies, catalogues and similar collections. FaBiO is based on FRBR, implemented via FRBR-DL (<em>the Essential FRBR in OWL2 DL Ontology</em>), which offers an OWL 2 DL view of the Davis and Newman FRBR RDF vocabulary (<a href="http://vocab.org/frbr/core">http://vocab.org/frbr/core</a>).</p>
+            <p>DoCO is an ontology that provides a general-purpose structured vocabulary of document elements. DoCO has been designed as a general unifying ontological framework for describing different aspects related to the content of scientific and other scholarly texts. Its primary goal has been to improve the interoperability and shareability of academic documents (and related services) when multiple formats are actually used for their storage. It is based on a theory of structural pattern for descriptive documents (<em>Structural Patterns, </em>shown in <a href="#refIllustration0"> </a>) <a href="#__RefNumPara__4210_1242533738"> </a> and, by means of DEO (<em>the </em>
+               <em>Discourse Elements Ontology</em>), also provides entities for describing the pure rhetorical characterisation of document components – e.g. Introduction, Background, Evaluation, Materials, Methods and Conclusion.</p>
+            <p>Finally, the DataCite Ontology, which we originally developed for describing in RDF the metadata properties of the DataCite Metadata Schema version 3.1 (<a href="https://semanticpublishing.wordpress.com/2016/02/08/mapping-datacite-3-1/">https://semanticpublishing.wordpress.com/2016/02/08/mapping-datacite-3-1/</a>), provides a flexible mechanism to define identifiers for bibliographic resources (e.g., papers and datasets) and related entities (e.g., authors) as first-class data entities (by means of the <em>Literal Reification</em> design pattern shown in <a href="#refIllustration0"> </a> 
+               <a href="#__RefNumPara__4906_1242533738"> </a>), instead of by using simple links between the owner of an identifier and the identifier string. This approach allows us better flexibility to extend the coverage of the ontology by adding additional individuals defining new kinds of identifier schemes (members of the class <code>datacite:IdentifierScheme</code>) as they are developed, without modifying the TBox of the ontology. This is a desirable aim, since once an ontology is stable it is best to minimize its structural modifications, so as to avoid the generation of possible usage inconsistencies.</p>
+         </section>
+         <section>
+            <h1>Ontologies for describing citations of scholarly resources </h1>
+            <p>The word <q>citation</q> is widely misused and misinterpreted in scientific discourse and the scholarly literature. For instance, we commonly use <q>citation</q> in five different ways to identify either (a) the act of citing another work, (b) a bibliographic reference put in the reference list at the end of a paper, (c) the particular in-text reference pointers to be found in the body of the citing work (e.g., <q>[3]</q>) denoting a particular bibliographic reference, (d) the citation link between citing and cited work that is created by inclusion of a bibliographic reference, or (e) the published work itself that is the object of that citation. In order to avoid such ambiguities, we have made an effort to provide a clear vocabulary for describing all these different aspects. </p>
+            <figure id="refIllustration2">
+               <p>
+                  <img src="img/100002010000084A0000032037CFB3CE.png"
+                       alt="The main components that allow a clear description of a citation and of all the related information."/>
+               </p>
+               <figcaption>The main components that allow a clear description of a citation and of all the related information.</figcaption>
+            </figure>
+            <p>In <a href="#refIllustration2"> </a>, we summarise visually the various components involved in the citation process, providing a clear nomenclature of distinct terms. In this context, a citation is a conceptual directional link from a citing entity to a cited entity, created by a human performative act of making a citation. It is worth mentioning that the citations instantiated by the inclusion of a bibliographic reference in the reference list (see (1) in <a href="#refIllustration2"> </a>) are <q>plain links</q> between the citing and cited entity, while those ones generated by using an in-text reference pointer (i.e. a local reference to a particular bibliographic reference in the reference list, see (2) in <a href="#refIllustration2"> </a>) have textual contexts that may reflect citation functions, i.e. the reason or reasons that an author cites the cited article at different places in the text of the citing article <a href="#__RefNumPara__8231_358898854"> </a>.</p>
+            <p>The SPAR Ontologies make available three additional ontological modules to allow one the accurate description of all the aforementioned entities. These are:</p>
+            <ul>
+               <li>
+                  <p>CiTO (the <em>Citation Typing Ontology</em>, <a href="http://purl.org/spar/cito">http://purl.org/spar/cito</a>), </p>
+               </li>
+               <li>
+                  <p>BiRO (the <em>Bibliographic Reference Ontology</em>, <a href="http://purl.org/spar/biro">http://purl.org/spar/biro</a>), and </p>
+               </li>
+               <li>
+                  <p>C4O (the <em>Citation Counting and Context Characterisation Ontology</em>, <a href="http://purl.org/spar/c4o">http://purl.org/spar/c4o</a>).</p>
+               </li>
+            </ul>
+            <p>They are summarised in <a href="#refIllustration3"> </a>.</p>
+            <figure id="refIllustration3">
+               <p>
+                  <img src="img/1000000000000439000001202F23C124.png"
+                       alt="A Graffoo diagram illustrating some of the ontological entities defined in CiTO, BiRO, and C4O."/>
+               </p>
+               <figcaption>A Graffoo diagram illustrating some of the ontological entities defined in CiTO, BiRO, and C4O.</figcaption>
+            </figure>
+            <p>CiTO makes it possible for authors (or others) to identify a citation link and to describe the citation intent (e.g., <code>cito:extends</code>, <code>cito:usesMethodIn</code>, <code>cito:supports</code>) when someone cites a particular publication, thus permitting the motives of an author when referring to another document to be captured. CiTO also allows one to create metadata describing citations that are distinct from metadata describing the citing or cited works themselves, thus enabling citations to be treated as first-class data entities (by means of the class <code>cito:Citation</code>, see <a href="https://opencitations.wordpress.com/2018/02/19/citations-as-first-class-data-entities-introduction/">https://opencitations.wordpress.com/2018/02/19/citations-as-first-class-data-entities-introduction/</a>) with their own properties (e.g. <code>cito:hasCitationTimeSpan</code>). </p>
+            <p>Additionally, two further corollary ontologies have been made available so as to classify all the CiTO properties according to their factual and positive/neutral/negative rhetorical functions (FOCO, the <em>Functions of Citations Ontology</em>) and to map them with appropriate Wordnet synsets (C2W, the <em>CiTO to Wordnet Ontology</em>).</p>
+            <p>BiRO allows the description of reference lists and bibliographic references themselves. Besides defining these in a machine-readable form, it is also useful to describe how these references are used within the citing paper. The <em>Collections Ontology</em> 
+               <a href="#__RefNumPara__998_1242533738"> </a> (shown in <a href="#refIllustration0"> </a>) is additionally employed to permit the counting and ordering of bibliographic references in a reference list.</p>
+            <p>C4O has been developed for addressing all these aspects, e.g. the in-text reference pointers within the citing paper, the links denoted by in-text reference pointers to the bibliographic references, the total number of in-text reference pointers within the citing paper that denote the same bibliographic reference, how much the referenced article is globally cited (according to particular bibliographic citation service, e.g., Google Scholar, on a particular date), and the textual contexts involved in a citation – i.e., the textual phrase, sentence or paragraph in the citing article containing a particular in-text reference pointer, and the structural or rhetorical section of the citing article where this is found.</p>
+         </section>
+         <section id="__RefHeading__14019_358898854">
+            <h1>Ontologies for describing the publishing workflow </h1>
+            <p>Other five ontological modules, the first three of which are strongly based on Ontology Design Patterns <a href="#__RefNumPara__21361_746342889"> </a> (shown in <a href="#refIllustration0"> </a>), have been developed to permit the description of contextual aspects of a publication, namely agents’ roles, document statuses, steps in the publishing workflow, contributors’ roles, and related academic administrative information. These are:</p>
+            <ul>
+               <li>
+                  <p>PRO (the <em>Publishing Roles Ontology,</em> 
+                     <a href="http://purl.org/spar/pro">http://purl.org/spar/pro</a>), </p>
+               </li>
+               <li>
+                  <p>PSO (the <em>Publishing Status Ontology</em>, <a href="http://purl.org/spar/pso">http://purl.org/spar/pso</a>), </p>
+               </li>
+               <li>
+                  <p>PWO (the <em>Publishing Workflow Ontology</em>, <a href="http://purl.org/spar/pwo">http://purl.org/spar/pwo</a>),</p>
+               </li>
+               <li>
+                  <p>SCoRO (the <em>Scholarly Contributions and Roles Ontology</em>, <a href="http://purl.org/spar/scoro">http://purl.org/spar/scoro</a>), and </p>
+               </li>
+               <li>
+                  <p>FRAPO (the <em>Funding, Research Administration and Projects Ontology</em>, <a href="http://purl.org/cerif/frapo">http://purl.org/cerif/frapo</a>).</p>
+               </li>
+            </ul>
+            <p>Exemplars of use of these is summarised in <a href="#refIllustration4"> </a>.</p>
+            <figure id="refIllustration4">
+               <p>
+                  <img src="img/10000000000004AE0000021FC32B0BAD.png"
+                       alt="A Graffoo diagram illustrating some of the ontological entities defined in PRO, PSO, PWO, SCoRO and FRAPO."/>
+               </p>
+               <figcaption>A Graffoo diagram illustrating some of the ontological entities defined in PRO, PSO, PWO, SCoRO and FRAPO.</figcaption>
+            </figure>
+            <p>PRO is an ontology that permits the characterisation of the roles of agents – people (e.g. editors, publishers), corporate bodies and computational agents – in the publication process. Furthermore, it allows one to specify the role an agent has in relation to a particular bibliographic entity (as author, editor, reviewer, etc.) or to a specific institution (as publisher, librarian, etc.), over a specified time period during which each role is held. </p>
+            <p>This ontology is complemented by SCoRO, which extends PRO by allowing the description of the contributions and additional roles of scholars, and the organizations of which they are members, with respect to projects, research investigations, publications, and other academic activities and outcomes.</p>
+            <p>PSO<strong> </strong>characterises the publication status of scholarly-related entities (e.g. documents) at each of the different stages in the publishing process (e.g., draft, submitted, under review, rejected for publication, accepted for publication, version of record, peer reviewed, open access). Using PSO, it is possible to describe the status of a document and how it changes over time.</p>
+            <p>PWO enables a description of the logical steps in a workflow, such as the process of publication of a document. Each step may involve one or more events or actions that take place at a particular phase of the workflow and in a certain order (e.g., authors are writing the article, the article is under review, a reviewer suggests to revise the article, the article is modified and accepted for publication, the article is finally published).</p>
+            <p>Complementing these ontologies, FRAPO is an ontology for describing academic administrative information, particularly as it relates to grant funding and research projects. It can be used for the characterization of grant applications, funding bodies, research projects, project partners, etc. It can also be used to describe other types of projects, for example building projects and educational projects.</p>
+         </section>
+         <section>
+            <h1>Metrics and statistics for bibliographic resources </h1>
+            <p>The final aspects that is addressed by the SPAR Ontologies concern the specification of qualitative and quantitative evaluations of a bibliographic resource or an agent (impact factor, h-index, e-index, article citation counts, author citation counts, conference ranking, etc.) and for the encoding of a Five Stars rating for articles. These have been implemented by the development of two ontologies:</p>
+            <ul>
+               <li>
+                  <p>BiDO (the <em>Bibliometric Data Ontology</em>, <a href="http://purl.org/spar/bido">http://purl.org/spar/bido</a>), and </p>
+               </li>
+               <li>
+                  <p>FiveStars (the <em>Five Stars of Online Journal Articles Ontology</em>, <a href="http://purl.org/spar/fivestars">http://purl.org/spar/fivestars</a>).</p>
+               </li>
+            </ul>
+            <p>These two ontologies are briefly introduced in <a href="#refIllustration5"> </a>.</p>
+            <figure id="refIllustration5">
+               <p>
+                  <img src="img/10000000000003EC000001C611649523.png"
+                       alt="A Graffoo diagram illustrating some of the ontological entities defined in BiDO and FiveStars."/>
+               </p>
+               <figcaption>A Graffoo diagram illustrating some of the ontological entities defined in BiDO and FiveStars.</figcaption>
+            </figure>
+            <p>BiDO is a modular OWL 2 ontology that allows the description of bibliometric data (either numerical data or categorial data) concerning people, articles, journals, and other scholarly-related entities. The core module of this ontology allows one to specify that these bibliometric data relate to specific times or time periods (using the same Ontology Design Patterns that have been adopted for use with the ontologies described in <a href="#__RefHeading__14019_358898854"> </a>) and involve certain agents and events (by reusing PROV-O <a href="#__RefNumPara__1000_1242533738"> </a>, shown in <a href="#refIllustration0"> </a>).</p>
+            <p>Finally, FiveStars is a simple ontology that is intended for use by publishers and others wishing to encode the <em>Five Stars ratings for published articles</em>, as proposed in <a href="#__RefNumPara__45286_358898854"> </a>, so they can accompany other machine-readable metadata for the article. The ontology includes ten data properties, five for specifying the value of each factor (shown in <a href="#refIllustration5"> </a>) and five for specifying a comment related to each assigned value.</p>
+         </section>
+      </section>
+      <section id="__RefHeading__4403_1619781847">
+         <h1>Community uptake</h1>
+         <p>The SPAR Ontologies have been already adopted by various communities and in several projects for describing data related to the publishing domain. Of those known to us, these include the US Global Change Information System, the United Nations, various W3C Working Groups, Springer Nature, OpenCitations, and Wikidata – a complete list is available at <a href="http://www.sparontologies.net/uptake">http://www.sparontologies.net/uptake</a>. On the same page are also listed the 677 articles (according to Google Scholar, as of 20 March 2018) that link to one or more of the SPAR Ontologies or that cite one of our publications describing them (listed at <a href="http://www.sparontologies.net/publications">http://www.sparontologies.net/publications</a>). </p>
+         <p>The SPAR Ontologies website has been accessed more than 1 million times since its launch in December 2015, by users from several countries (identified by the IP address of the request, after excluding all the user agents that contained one of the following tokens: <q>crawler</q>, <q>spider</q>, <q>bot</q>, <q>yahoo! Slurp</q>, <q>bubing</q>), as shown in <a href="#refIllustration6"> </a> – with the US being responsible for the 78% of the accesses. It is worth mentioning that the pages related to the ontologies themselves (<a href="http://www.sparontologies.net/ontologies">http://www.sparontologies.net/ontologies</a> and related subpages) have together gained a very high percentage of the overall accesses (i.e. 88%), showing that the main reason people access the SPAR Ontologies website is to explore and use the ontologies.</p>
+         <figure id="refIllustration6">
+            <p>
+               <img src="img/100002010000072C000001FA3B1F0FDD.png"
+                    alt="The page accesses that the SPAR Ontologies website has received since its launch, grouped by month and by country (excluding accesses by automated web crawlers and bots)."/>
+            </p>
+            <figcaption>The page accesses that the SPAR Ontologies website has received since its launch, grouped by month and by country (excluding accesses by automated web crawlers and bots).</figcaption>
+         </figure>
+         <p>We have also analysed the statistics related to the SPAR Ontologies Twitter account (<a href="https://twitter.com/sparontologies">https://twitter.com/sparontologies</a>). As shown in <a href="#refIllustration7"> </a>, there was a clear increase in the account engagements from February 2017, possibly due to the beginning of our active publishing activity on Twitter starting from July 2016 – while in the previous months this Twitter account was available but was not intensively used for sharing purposes.</p>
+         <figure id="refIllustration7">
+            <p>
+               <img src="img/10000201000006F60000030AB32EF76A.png"
+                    alt="The number of interactions that the SPAR Ontologies Twitter account has had over the past years."/>
+            </p>
+            <figcaption>The number of interactions that the SPAR Ontologies Twitter account has had over the past years.</figcaption>
+         </figure>
+         <p>In <a href="#refIllustration8"> </a>, we show the statistics concerning the SPAR-related resources (i.e. the examples of usage in Turtle and the DataCite mapping document, all available at <a href="http://www.sparontologies.net/examples">http://www.sparontologies.net/examples</a>) that were made available on Figshare some months before the SPAR Ontologies website launch. These Figshare documents have obtained 9,575 views and 1,463 downloads overall. Similar to the previous statistics for the Twitter account, the Figshare graph shows a clear increase in the downloads from January 2017. In contrast, the number of views of the Figshare resources reached rough stability immediately after the launch of the SPAR website in December 2015.</p>
+         <figure id="refIllustration8">
+            <p>
+               <img src="img/10000201000006C6000001EAD91BDB1A.png"
+                    alt="The number of times SPAR-related resources (examples and the DataCite mapping document) released on Figshare have been visited and downloaded in the past months."/>
+            </p>
+            <figcaption>The number of times SPAR-related resources (examples and the DataCite mapping document) released on Figshare have been visited and downloaded in the past months.</figcaption>
+         </figure>
+         <p>In order to guarantee better support for the SPAR community, all the SPAR Ontologies resources have been recently migrated from Sourceforge to GitHub (<a href="https://github.com/sparontologies">https://github.com/sparontologies</a>), that includes several repositories, one for each ontology included in SPAR. This makes it easier to post and handle issues, and to gather new feedback from the community by using the GitHub issue tracker available in each repository.</p>
+         <p>While the IRI of all the current (and future) ontologies are specified by means of <code>http://purl.org/spar</code> and<code> http://purl.org/cerif </code>as base URLs, we have also activated a new <code>https://w3id.org/spar</code> domain as an alternative route for accessing them. In addition, the content negotiation mechanism for access to all the SPAR ontologies is now handled outside the SPAR Ontologies website, by means of the w3id.org service (see <a href="https://github.com/perma-id/w3id.org/blob/master/spar/.htaccess">https://github.com/perma-id/w3id.org/blob/master/spar/.htaccess</a>).</p>
+         <p>Finally, we have also recently released a set of new contribution guidelines (<a href="https://sparontologies.github.io/">https://sparontologies.github.io</a>) that will permit members of the community to propose new ontologies to be added to the SPAR suite. In particular, we have defined a clear workflow – made possible by the new GitHub SPAR repository – for accepting such external contributions in a more structured way than was possible in the past. </p>
+         <p>We are very please to report that we are in the process of including the FAIR* Reviews ontology (<a href="https://w3id.org/fr/def/core">https://w3id.org/fr/def/core</a>) within the SPAR Ontologies, whose creators are our first adopters of these new SPAR contribution guidelines.</p>
+      </section>
+      <section id="__RefHeading__4405_1619781847">
+         <h1>Conclusions</h1>
+         <p>In this paper, we have introduced our ongoing effort (over the past eight years) in ontology development for the scholarly publishing domain, by describing the SPAR (Semantic Publishing and Referencing) Ontologies, a suite of ontological modules recording different aspect of the scholarly publishing domain by means of Semantic Web technologies. We have briefly presented all the ontologies currently included within the SPAR suite (as of 31 March 2018), have listed their main development principles, and have described tools we have created to support their understanding and reuse. Finally, we have also given some Web site usage and social media statistics showing community interactions with the SPAR Ontologies, and have described their uptake within academic articles and development projects.</p>
+         <p>In the future, we plan to work actively on two specific aspects. First, we want to extend community involvement with the SPAR Ontologies, by suggesting to creators of additional specialist ontologies for the scholarly publishing domain that they consider making their ontological artefacts available as part of the SPAR Ontologies, which our new guidelines should facilitate. Additionally, we want to develop tools that authors and publishers can use for the (semi-)automatic production of SPAR-based metadata, so as to facilitate the Web publication of machine-readable descriptions of academic publications, structured according to a complete, well-developed and trusted data model for the scholarly publishing domain.</p>
+      </section>
+      <section role="doc-acknowledgements">
+         <h1>Acknowledgements</h1>
+         <p>We would like to thank the many people that have contributed to the development of different aspects of the SPAR Ontologies, in particular those listed at <a href="http://www.sparontologies.net/about#collabs">http://www.sparontologies.net/about#collabs</a>, and the creators of the FAIR* Review ontology, Idafen Santana-Pérez and María Poveda-Villalón. While the majority of the SPAR development work was undertaken without direct external financial support, we gratefully acknowledge the original Jisc funding to DMS that triggered these developments, and recent financial support provided to us by the Alfred P. Sloan Foundation for the OpenCitations Enhancement Project (grant number G‐2017‐9800), that has indirectly facilitated this work. </p>
+      </section>
+      <section role="doc-bibliography">
+         <h1>References</h1>
+         <ol>
+            <li id="__RefNumPara__4367_1619781847" role="doc-biblioentry">
+               <p>Shotton, D. (2009). Semantic publishing: the coming revolution in scientific journal publishing. Learned Publishing, 22 (2): 85-94. DOI: <a href="https://doi.org/10.1087/2009202">https://doi.org/10.1087/2009202</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__11940_746342889" role="doc-biblioentry">
+               <p>Dumontier, M., Baker, C. J. O., Baran, J., et al. (2014). The Semanticscience Integrated Ontology (SIO) for biomedical research and knowledge discovery. Journal of Biomedical Semantics 2014, 5: 14. DOI: <a href="https://doi.org/10.1186/2041-1480-5-14">https://doi.org/10.1186/2041-1480-5-14</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__7972_746342889" role="doc-biblioentry">
+               <p>Hu, Y., Janowicz, K., McKenzie, G., Sengupta, K., Hitzler, P. (2013). A linked-data-driven and semantically-enabled journal portal for scientometrics. In Proceedings of ISWC 2013: 114-129. DOI: <a href="https://doi.org/10.1007/978-3-642-41338-4_8">https://doi.org/10.1007/978-3-642-41338-4_8</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__7974_746342889" role="doc-biblioentry">
+               <p>Hammond, T., Pasin, M. (2015). The nature.com ontologies portal. In Proceedings of LISC 2015. <a href="http://ceur-ws.org/Vol-1572/paper2.pdf">http://ceur-ws.org/Vol-1572/paper2.pdf</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__11906_746342889" role="doc-biblioentry">
+               <p>Groza, T., Handschuh, S., Moller, K., Decker, S. (2007). SALT - Semantically Annotated LaTeX for Scientific Publications. In Proceedings of ESWC 2007: 518-532. DOI: <a href="https://doi.org/10.1007/978-3-540-72667-8_37">https://doi.org/10.1007/978-3-540-72667-8_37</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__11908_746342889" role="doc-biblioentry">
+               <p>Ciccarese, P., Wub, E., Wong, G., Ocana, M., Kinoshita, J., Ruttenberg, A., Clark, T. (2008). The SWAN biomedical discourse ontology. In Journal of Biomedical Informatics, 41 (5): 739-751. DOI: <a href="https://doi.org/10.1016/j.jbi.2008.04.010">https://doi.org/10.1016/j.jbi.2008.04.010</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__11904_746342889" role="doc-biblioentry">
+               <p>Hillmann, D., Coyle, K., Phipps, J., Dunsire, G. (2010). RDA Vocabularies: Process, Outcome, Use. D-Lib Magazine, 16(1/2). <a href="https://doi.org/10.1045/january2010-hillmann">https://doi.org/10.1045/january2010-hillmann</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__12370_746342889" role="doc-biblioentry">
+               <p>Hammond, T., Pasin, M., Theodoridis, E. (2017). Data integration and disintegration: Managing Springer Nature SciGraph with SHACL and OWL. In Proceedings of the Posters, Demos &amp; Industry Tracks of ISWC 2017. <a href="http://ceur-ws.org/Vol-1963/paper493.pdf">http://ceur-ws.org/Vol-1963/paper493.pdf</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__12184_746342889" role="doc-biblioentry">
+               <p>DCMI Usage Board (2012). DCMI Metadata Terms. Dublin Core Metadata Initiative. <a href="http://dublincore.org/documents/dcmi-terms/">http://dublincore.org/documents/dcmi-terms/</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__12186_746342889" role="doc-biblioentry">
+               <p>IFLA Study Group on the Functional Requirements for Bibliographic Records (2009). Functional Requirements for Bibliographic Records – Final Report. International Federation of Library Associations and Institutions. <a href="https://www.ifla.org/files/assets/cataloguing/frbr/frbr_2008.pdf">https://www.ifla.org/files/assets/cataloguing/frbr/frbr_2008.pdf</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__12256_746342889" role="doc-biblioentry">
+               <p>D'Arcus, B., Giasson, F. (2009). Bibliographic Ontology Specification. Specification Document - 4 November 2009. <a href="http://bibliontology.com/">http://bibliontology.com</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__12330_746342889" role="doc-biblioentry">
+               <p>Buckingham Shum, S., Motta, E., Domingue, J. (2000). ScholOnto: an ontology-based digital library server for research documents and discourse. International Journal on Digital Libraries, 3 (3): 237–248. DOI: <a href="https://doi.org/10.1007/s007990000034">https://doi.org/10.1007/s007990000034</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__12412_746342889" role="doc-biblioentry">
+               <p>Nuzzolese, A. G., Gentile, A. L., Presutti, V., Gangemi, A. (2016). Conference linked data: The ScholarlyData Project. In Proceedings of ISWC 2016: 150-158. DOI: <a href="https://doi.org/10.1007/978-3-319-46547-0_16">https://doi.org/10.1007/978-3-319-46547-0_16</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__12499_746342889" role="doc-biblioentry">
+               <p>Library of Congress - Network Development and MARK Standard Office (2015). MARK 21 format for bibliographic data. 1999 edition, further updates October 2000 through and September 2015. <a href="http://www.loc.gov/marc/bibliographic/">http://www.loc.gov/marc/bibliographic/</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__12715_746342889" role="doc-biblioentry">
+               <p>Shotton, D. (2010). CiTO, the Citation Typing Ontology. In Journal of Biomedical Semantics, 1 (Suppl 1):S6. <a href="https://doi.org/10.1186/2041-1480-1-S1-S6">https://doi.org/10.1186/2041-1480-1-S1-S6</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__9179_1619781847" role="doc-biblioentry">
+               <p>d'Aquin, M. (2012). Modularizing ontologies. In Ontology Engineering in a Networked World: 212-233. DOI: <a href="https://doi.org/10.1007/978-3-642-24794-1_10">https://doi.org/10.1007/978-3-642-24794-1_10</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__9269_1619781847" role="doc-biblioentry">
+               <p>Corcho, O., Poveda-Villalón, M., Gómez‐Pérez, A. (2015). Ontology engineering in the era of linked data. Bulletin of the Association for Information Science and Technology, 41 (4): 13-17. DOI: <a href="https://doi.org/10.1002/bult.2015.1720410407">https://doi.org/10.1002/bult.2015.1720410407</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__21215_746342889" role="doc-biblioentry">
+               <p>Hammar, K., Lin, F., Tarasov, V. (2010). Information reuse and interoperability with ontology patterns and linked data. In Proceedings of BIS 2010. DOI: <a href="https://doi.org/10.1007/978-3-642-15402-7_23">https://doi.org/10.1007/978-3-642-15402-7_23</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__21361_746342889" role="doc-biblioentry">
+               <p>Presutti, V., Gangemi, A. (2008). Content ontology design patterns as practical building blocks for web ontologies. In Proceedings ER 2008: 128-141. DOI: <a href="https://doi.org/10.1007/978-3-540-87877-3_11">https://doi.org/10.1007/978-3-540-87877-3_11</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__22067_746342889" role="doc-biblioentry">
+               <p>Peroni, S. (2017). A simplified agile methodology for ontology development. In Proceedings of OWLED-ORE 2016: 55-69. DOI: <a href="https://doi.org/10.1007/978-3-319-54627-8_5">https://doi.org/10.1007/978-3-319-54627-8_5</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__22063_746342889" role="doc-biblioentry">
+               <p>Peroni, S., Shotton, D., Vitali, F. (2012). The Live OWL Documentation Environment: a tool for the automatic generation of ontology documentation. In Proceedings of EKAW 2012: 398-412. DOI: <a href="https://doi.org/10.1007/978-3-642-33876-2_35">https://doi.org/10.1007/978-3-642-33876-2_35</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__22065_746342889" role="doc-biblioentry">
+               <p>Falco, R., Gangemi, A., Peroni, S., Vitali, F. (2014). Modelling OWL ontologies with Graffoo. In The Semantic Web: ESWC 2014 Satellite Events: 320-325. DOI: <a href="https://doi.org/10.1007/978-3-319-11955-7_42">https://doi.org/10.1007/978-3-319-11955-7_42</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__22813_746342889" role="doc-biblioentry">
+               <p>International Digital Enterprise Alliance (2009). PRISM Introduction. PRISM - Publishing Requirements for Industry Standard Metadata, version 2.1. <a href="http://www.prismstandard.org/specifications/2.1/PRISM_introduction_2.1.pdf">http://www.prismstandard.org/specifications/2.1/PRISM_introduction_2.1.pdf</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__998_1242533738" role="doc-biblioentry">
+               <p>Ciccarese, P., Peroni, S. (2014). The Collections Ontology: creating and handling collections in OWL 2 DL frameworks. Semantic Web, 5(6): 515–529. DOI: <a href="https://doi.org/10.3233/SW-130121">https://doi.org/10.3233/SW-130121</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__1000_1242533738" role="doc-biblioentry">
+               <p>Lebo, T., Sahoo, S., McGuinness, D. (2013). PROV-O: The PROV Ontology. W3C Recommendation 30 April 2013. <a href="https://www.w3.org/TR/prov-o/">https://www.w3.org/TR/prov-o/</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__996_1242533738" role="doc-biblioentry">
+               <p>Brickley, D., Miller, L. (2014). FOAF Vocabulary Specification 0.99. Namespace Document 14 January 2014 - Paddington Edition. <a href="http://xmlns.com/foaf/spec/">http://xmlns.com/foaf/spec/</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__994_1242533738" role="doc-biblioentry">
+               <p>Miles, A., Bechhofer, S. (2009). SKOS Simple Knowledge Organization System – Reference. W3C Recommendation 18 August 2009. <a href="https://www.w3.org/TR/skos-reference/">https://www.w3.org/TR/skos-reference/</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__4210_1242533738" role="doc-biblioentry">
+               <p>Di Iorio, A., Peroni, S., Poggi, F., Vitali, F. (2014). Dealing with structural patterns of XML documents. Journal of the American Society for Information Science and Technology, 65 (9): 1884-1900. DOI: <a href="https://doi.org/10.1002/asi.23088">https://doi.org/10.1002/asi.23088</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__4906_1242533738" role="doc-biblioentry">
+               <p>Gangemi, A., Peroni, S., Vitali, F. (2010). Literal reification. In Proceedings of WOP 2010: 65-66. <a href="http://ceur-ws.org/Vol-671/pat04.pdf">http://ceur-ws.org/Vol-671/pat04.pdf</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__8231_358898854" role="doc-biblioentry">
+               <p>Teufel, S., Siddharthan, A., Tidhar, D. (2006). Automatic classification of citation function. In Proceedings of EMNLP 2006: 103-110. DOI: <a href="https://doi.org/10.3115/1610075.1610091">https://doi.org/10.3115/1610075.1610091</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__20980_358898854" role="doc-biblioentry">
+               <p>Wilkinson, M. D., Dumontier, M., Aalbersberg, I. J., Appleton, G., et al. (2016). The FAIR Guiding Principles for scientific data management and stewardship. Scientific Data 3. DOI: <a href="https://doi.org/10.1038/sdata.2016.18">https://doi.org/10.1038/sdata.2016.18</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__45286_358898854" role="doc-biblioentry">
+               <p>Shotton D (2012). The Five Stars of Online Journal Articles – a Framework for Article Evaluation. D-Lib Magazine, 18 (January/February issue). DOI: <a href="https://doi.org/10.1045/january2012-shotton">https://doi.org/10.1045/january2012-shotton</a> 
+               </p>
+            </li>
+         </ol>
+      </section>
+   </body>
+</html>
